@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 public class GamePrep extends JFrame implements KeyListener, ActionListener {
 
 	//declare copies of our character
-	private Character1 character1;
+	private Character1 character1 ;
 	private Character2 character2;
 	
 	//GUI variables
