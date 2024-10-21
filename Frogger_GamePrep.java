@@ -10,25 +10,27 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class GamePrep extends JFrame implements KeyListener, ActionListener {
+public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListener {
 
 	//declare copies of our character
 	private Character1 character1;
 	private Character2 character2;
+	private Character2 chara_loggie;
 	
 	//GUI variables
 	private Container content;
-	private JLabel character1Label, character2Label;
-	private ImageIcon character1Image, character2Image;
+	private JLabel character1Label, character2Label, chara_loggieLabel;
+	private ImageIcon character1Image, character2Image, chara_loggieImage;
 	
 	//2 buttons
 	private JButton startButton, visibilityButton;
 	
 	//GUI setup
-	public GamePrep() {
+	public Frogger_GamePrep() {
 		super("Doctor Demo");
-		character1 = new Character1(100, 200, 120, 200, "dw12.png");
-		character2 = new Character2(0, 0, 120, 200, "tardis.png");
+		character1 = new Character1(100, 200, 120, 200, "froggie.png");
+		character2 = new Character2(0, 0, 120, 200, "car.jpeg");
+		chara_loggie = new Character2(0, 0, 120, 200, "loggie.jpeg");
 		
 		//set up screen
 		setSize(GameProperties.SCREEN_WIDTH, 
@@ -42,7 +44,7 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		character1.setY(250);
 		character1.setWidth(100);
 		character1.setHeight(200);
-		character1.setImage("dw12.png");
+		character1.setImage("froggie.png");
 		
 		character1Label = new JLabel();
 		character1Image = new ImageIcon(
@@ -61,7 +63,7 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		character2.setY(0);
 		character2.setWidth(120);
 		character2.setHeight(200);
-		character2.setImage("tardis.png");
+		character2.setImage("car.jpeg");
 		character2.setCharacter1(character1);
 		
 		//cannot go here because character2Label doesn't
@@ -80,10 +82,63 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		character2Label.setLocation(
 						character2.getX(), character2.getY() );
 		
-		//character2Label HAS a memory address
+		
+		//character2Label HAS a memory address 
 		character2.setCharacter2Label(character2Label);
 		character2.setCharacter1Label(character1Label);
 		
+		//character2 setup
+		character2.setX(0);
+		character2.setY(0);
+		character2.setWidth(120);
+		character2.setHeight(200);
+		character2.setImage("car.jpeg");
+		character2.setCharacter1(character1);
+		
+		
+//===============  down here for log setting ==============
+		
+		//cannot go here because character2Label doesn't
+		//get memory address until next line of code
+		//character2.setCharacter2Label(character2Label);
+				
+		chara_loggieLabel = new JLabel();
+		chara_loggieImage = new ImageIcon(
+			getClass().getResource("images/" + chara_loggie.getImage()
+				));
+		chara_loggieLabel.setIcon(chara_loggieImage);
+		chara_loggieLabel.setSize(
+						chara_loggie.getWidth(),
+						chara_loggie.getHeight()
+				);
+		chara_loggieLabel.setLocation(
+						chara_loggie.getX(), chara_loggie.getY() );
+		
+		//chara_loggieLabel HAS a memory address, using function from character2
+		chara_loggie.setChara_loggieLabel(chara_loggieLabel);
+		chara_loggie.setCharacter1Label(character1Label);
+
+//		System.out.println("chara_loggieLabel initialized: " + (chara_loggieLabel != null));
+
+		//sometimes the character2 will show null pointer exception for some reasons
+//		if (chara_loggieLabel != null) {
+//			chara_loggie.setCharacter2Label(chara_loggieLabel);
+//			chara_loggie.setCharacter1Label(character1Label);
+//		} else {
+//			System.out.println("====memory has nnot set yet! =====");
+//		}
+//		
+							
+		//chara_loggie setup
+		chara_loggie.setX(0);
+		chara_loggie.setY(30);
+		chara_loggie.setWidth(120);
+		chara_loggie.setHeight(200);
+		chara_loggie.setImage("loggie.jpeg");
+		chara_loggie.setCharacter1(character1);
+		
+		
+//===============  up here for log setting ==============
 		
 		//set up visibility button
 		visibilityButton = new JButton("Hide");
@@ -94,6 +149,8 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		visibilityButton.setFocusable(false);
 		visibilityButton.addActionListener(this);
 		character2.setVisibilityButton(visibilityButton);
+		chara_loggie.setVisibilityButton(visibilityButton);
+
 
 		//move button
 		startButton = new JButton("Run");
@@ -104,12 +161,15 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 		startButton.setFocusable(false);
 		startButton.addActionListener(this);
 		character2.setStartButton(startButton);
+		//and the log so that log can run together
+		chara_loggie.setStartButton(startButton);
 		
 		
 		add(visibilityButton);
 		add(startButton);
 		add(character1Label);
 		add(character2Label);
+		add(chara_loggieLabel);
 		
 		content.addKeyListener(this);
 		content.setFocusable(true);
@@ -120,7 +180,7 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 	
 
 	public static void main(String[] args) {
-		GamePrep myGame = new GamePrep();
+		Frogger_GamePrep myGame = new Frogger_GamePrep();
 		myGame.setVisible(true);
 	}
 
@@ -219,6 +279,7 @@ public class GamePrep extends JFrame implements KeyListener, ActionListener {
 			if ( character2.getMoving() ) {
 				character2.stopThread();
 			} else {
+
 				character2.startThread();
 			}
 		

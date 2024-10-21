@@ -1,6 +1,5 @@
 
 public class Character1 extends Sprite {
-	//will not generate without extends Sprite
 
 	public Character1() {
 		super();
