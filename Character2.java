@@ -86,7 +86,7 @@ public class Character2 extends Sprite implements Runnable {
 			
 //			startButton.setText("Stop");
 			
-			this.setImage("car.jpeg");
+//			this.setImage("nobgd_car.png");
 			
 			//is it here?
 			//wait until not null
@@ -105,8 +105,13 @@ public class Character2 extends Sprite implements Runnable {
 		//detect the null pointer
 		if (carLabel == null) {
 			System.out.println("=======check station 2: carLabel is null=======");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e){
+				e.printStackTrace();
+			}
 		}
-			frog.setImage("froggie.png");
+			frog.setImage("nobgd_grogu.png");
 frogLabel.setIcon(new ImageIcon(
 		getClass().getResource("images/" + frog.getImage()
 )));
@@ -162,6 +167,7 @@ frogLabel.setIcon(new ImageIcon(
 			
 			//is it here? yes it is lol
 			//wait until not null
+			//move the car if not null
 			if (carLabel == null
 					) {
 				try {
@@ -252,12 +258,12 @@ frogLabel.setIcon(new ImageIcon(
 				System.out.println("BOOM!");
 
 				
-				this.setImage("car.jpeg");
+				this.setImage("nobgd_car.png");
 			carLabel.setIcon(new ImageIcon(
 					getClass().getResource("images/" + this.getImage()
 			)));
 
-				frog.setImage("froggie.png");
+				frog.setImage("nobgd_grogu.png");
 			frogLabel.setIcon(new ImageIcon(
 					getClass().getResource("images/" + frog.getImage()
 			)));
