@@ -17,8 +17,12 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 	private Character2 car;//car setup
 	private Character2 loggie;
 	private Character1 bgd;
+	
 	private Character2 carArrays[];
 	private JLabel carLabels[];
+	private Character2 carArrays2[];
+	private JLabel carLabels2[];
+	
 	private Character2 logArrays[];
 	private JLabel logLabels[];
 	
@@ -65,40 +69,6 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		frogLabel.setLocation(
 				frog.getX(), frog.getY() );
 
-		//Car setup
-//		car.setX(0);
-//		car.setY(450);
-//		car.setWidth(122);
-//		car.setHeight(70);
-//		car.setImage("nobgd_car.png");
-//		car.setCharacter1(frog);
-//		car.setCharacter1Label(frogLabel);
-
-		//loggie setup
-//		loggie.setX(0);
-//		loggie.setY(0);
-//		loggie.setWidth(120);
-//		loggie.setHeight(200);
-//		loggie.setImage("nobgd_loggie.png");
-//		loggie.setCharacter1(frog);
-//		loggie.setCharacter1Label(frogLabel);
-
-//		carLabel = new JLabel();
-//		carImage = new ImageIcon(
-//			getClass().getResource("images/" + car.getImage()
-//				));
-//		carLabel.setIcon(carImage);
-//		carLabel.setSize(
-//						car.getWidth(),
-//						car.getHeight()
-//				);
-//		carLabel.setLocation(
-//						car.getX(), car.getY() );
-		
-		//carLabel HAS a memory address 
-//		car.setCharacter2Label(carLabel);
-//		car.setCharacter1Label(frogLabel);	
-		//car.startThread();
 		
 		//car loop labels array setup
 		int carCount = 5;
@@ -109,7 +79,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		for(int i=0; i < carCount; i++) {
 			if (carArrays[i] == null) {//just in case it's null again
 				
-				carArrays[i] = new Character2(0 + (i * 350), 380, 57, 100, "nobgd_car.png");
+				carArrays[i] = new Character2(0 + (i * 550), 380, 57, 100, "nobgd_car.png");
 				carLabels[i] = new JLabel();
 				carImage = new ImageIcon(
 						getClass().getResource("images/" + car.getImage()
@@ -131,7 +101,36 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 			}
 		}
 //		car.setCharacter1Label(frogLabel);	
+		//car loop labels array setup
+		int carCount2 = 5;
+		carArrays2 = new Character2[carCount2];
+		carLabels2 = new JLabel[carCount2]; 
 		
+		//start a loop to initiate more cars
+		for(int i=0; i < carCount; i++) {
+			if (carArrays2[i] == null) {//just in case it's null again
+				
+				carArrays2[i] = new Character2(350 + (i * 550), 440, 57, 100, "nobgd_car.png");
+				carLabels2[i] = new JLabel();
+				carImage = new ImageIcon(
+						getClass().getResource("images/" + car.getImage()
+							));
+				carLabels2[i].setIcon(carImage);
+				carLabels2[i].setSize(
+						carArrays2[i].getWidth(),
+						carArrays2[i].getHeight()
+				);
+				carLabels2[i].setLocation(
+						carArrays2[i].getX(), carArrays2[i].getY() );
+				
+				carArrays2[i].setCharacter1(frog);
+				//set car labels collision inside loop
+				carArrays2[i].setCharacter2Label(carLabels2[i]);
+				carArrays2[i].setCharacter1Label(frogLabel);	
+				
+				add(carLabels2[i]);
+			}
+		}
 		
 //===============  down here for loggie setting ==============
 //		loggieLabel = new JLabel();
@@ -152,7 +151,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 //		loggie.startThread();
 		
 		//car loop labels array setup
-		int logCount = 4;
+		int logCount = 6;
 		logArrays = new Character2[logCount];
 		logLabels = new JLabel[logCount]; 
 		
@@ -160,7 +159,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		for(int i=0; i < logCount; i++) {
 			if (logArrays[i] == null) {//just in case it's null again
 				
-				logArrays[i] = new Character2(0, 100 + (i * 66), 65, 119, "nobgd_loggie.png");
+				logArrays[i] = new Character2(0 + (i * 350), 75, 65, 119, "nobgd_loggie.png");
 				logLabels[i] = new JLabel();
 				loggieImage = new ImageIcon(
 						getClass().getResource("images/" + loggie.getImage()
@@ -270,10 +269,12 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 			if (carArrays[i] != null) {
 				
 				carArrays[i].startThread();
+				carArrays2[i].startThread();
 //				System.out.println("car array is moving...");
 //				System.out.println("Car no." + i + " is moving.");
 			}
 		}
+		
 		
 		for (int i = 0; i < logArrays.length; i++) {
 			if (logArrays[i] != null) {

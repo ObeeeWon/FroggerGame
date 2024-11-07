@@ -2,7 +2,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class Character2 extends Sprite implements Runnable {
+public class Character3 extends Sprite implements Runnable {
 	
 //	private Boolean visible;
 	private Boolean moving;
@@ -24,7 +24,7 @@ public class Character2 extends Sprite implements Runnable {
 		frogLabel = temp;
 	}
 	
-	public void setCharacter2Label(JLabel temp) {
+	public void setcharacter3Label(JLabel temp) {
 		carLabel = temp;
 	}
 	
@@ -56,14 +56,14 @@ public class Character2 extends Sprite implements Runnable {
 		this.moving = moving;
 	}
 
-	public Character2() {
+	public character3() {
 		super();
 		// TODO Auto-generated constructor stub
 		this.moving = false;
 //		this.visible = true;
 	}
 
-	public Character2(int x, int y, int height, int width, String image) {
+	public character3(int x, int y, int height, int width, String image) {
 		super(x, y, height, width, image);
 		// TODO Auto-generated constructor stub
 		this.moving = false;
@@ -102,7 +102,7 @@ frogLabel.setIcon(new ImageIcon(
 		}
 
 			System.out.println("Starting thread");
-			t = new Thread(this, "Character2 thread");
+			t = new Thread(this, "character3 thread");
 			t.start(); //automatic call to the run method
 		}
 		
