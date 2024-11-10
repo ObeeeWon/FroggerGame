@@ -2,7 +2,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class Character3 extends Sprite implements Runnable {
+//Character3 is used for loggie
+public class Character3 extends Frogger_Sprite implements Runnable {
 	
 //	private Boolean visible;
 	private Boolean moving;
@@ -16,6 +17,8 @@ public class Character3 extends Sprite implements Runnable {
 	private Character1 frog;
 	private JLabel frogLabel;
 	
+	private Character3 logArrays[];
+	
 	public void setCharacter1 (Character1 temp) {
 		frog = temp;
 	}
@@ -24,7 +27,7 @@ public class Character3 extends Sprite implements Runnable {
 		frogLabel = temp;
 	}
 	
-	public void setcharacter3Label(JLabel temp) {
+	public void setCharacter3Label(JLabel temp) {
 		carLabel = temp;
 	}
 	
@@ -40,14 +43,6 @@ public class Character3 extends Sprite implements Runnable {
 		visibiltyButton = temp;
 	}
 
-//	public Boolean getVisible() {
-//		return visible;
-//	}
-
-//	public void setVisible(Boolean visible) {
-//		this.visible = visible;
-//	}
-
 	public Boolean getMoving() {
 		return moving;
 	}
@@ -55,20 +50,24 @@ public class Character3 extends Sprite implements Runnable {
 	public void setMoving(Boolean moving) {
 		this.moving = moving;
 	}
+	
+	public void setLogArrays(Character3 logArrays[]) {
+		this.logArrays = logArrays;
+	}
 
-	public character3() {
+	public Character3() {
 		super();
 		// TODO Auto-generated constructor stub
 		this.moving = false;
 //		this.visible = true;
 	}
 
-	public character3(int x, int y, int height, int width, String image) {
+	public Character3(int x, int y, int height, int width, String image) {
 		super(x, y, height, width, image);
 		// TODO Auto-generated constructor stub
 		this.moving = false;
-//		this.visible = true;
 	}
+		
 	
 	public void startThread() {
 		//run will be triggered
@@ -96,13 +95,7 @@ public class Character3 extends Sprite implements Runnable {
 frogLabel.setIcon(new ImageIcon(
 		getClass().getResource("images/" + frog.getImage()
 )));
-		//detect the null pointer
-		if (carLabel == null) {
-			System.out.println("=======check station 3: carLabel is null=======");
-		}
-
-			System.out.println("Starting thread");
-			t = new Thread(this, "character3 thread");
+			t = new Thread(this, "Character3 thread");
 			t.start(); //automatic call to the run method
 		}
 		
@@ -119,45 +112,28 @@ frogLabel.setIcon(new ImageIcon(
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		if (loggieLabel == null) {
-		    System.out.println("loggieLabel is null before starting the thread!");
-		} else {
-		    System.out.println("loggieLabel is set correctly.");
-		}
+
 		System.out.println("run triggered");
+		
+//		if (loggieLabel == null) {
+//		    System.out.println("loggieLabel is null before starting the thread!");
+//		} else {
+//		    System.out.println("loggieLabel is set correctly.");
+//		}
 		
 		// set x position for both cars and logs
 		int x = this.x;
-		int x2 = this.x;
-		// ===================
+
 		while (this.moving) {
 			
 			x += GameProperties.CHARACTER_STEP;
-			x2 -= GameProperties.CHARACTER_STEP;
 			
 			if ( x >= GameProperties.SCREEN_WIDTH) {
-				x = -1 * this.width;
-				
+				x = -1 * this.width;			
 			}
-			if ( x2 <= -1 * this.width) {//if position goes off-screen
-				x2 = GameProperties.SCREEN_WIDTH;
-				
-			}
-			this.setX(x); //this.x = x; //rectangle doesn't update
 			
-			//is it here? yes it is lol
-			//wait until not null
-			//move the car if not null
-			if (carLabel == null
-					) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e){
-					e.printStackTrace();
-				}
-			} else {
-				carLabel.setLocation(x, this.y);
-			}
+			this.setX(x); //rectangle doesn't update
+			carLabel.setLocation(x, this.y);
 			
 			//loggieLabel is moving at here !!!!!
 			if (loggieLabel == null 
@@ -168,13 +144,12 @@ frogLabel.setIcon(new ImageIcon(
 					e.printStackTrace();
 				}
 			} else {
-				loggieLabel.setLocation(x2, this.y);
+				loggieLabel.setLocation(x, this.y);
 			}
 			
 			
-			//detect collisions between frog r and char2
-//			if (this.visible) this.detectCollision();
-			this.detectCollision();
+			//detect if on board between frog and log
+			this.detectOnBoard();
 			
 			System.out.println("x, y: " + this.x + " " + this.y);
 			
@@ -185,54 +160,23 @@ frogLabel.setIcon(new ImageIcon(
 			}
 			
 		}
-		// it wont work for now try into one loop
-//		while (this.moving) {
-//			
-//			int x = this.x;
-//			
-//			x -= GameProperties.CHARACTER_STEP;
-//			
-//			if ( x >= GameProperties.SCREEN_WIDTH) {
-//				x = -1 * this.width;
-//			}
-//			
-//			this.setX(x); //this.x = x; //rectangle doesn't update
-//			
-//			//add loggie here to see what would happen
-//			loggieLabel.setLocation(this.x, this.y);
-//
-//			//detect collisions between frog r and char2
-//			if (this.visible) this.detectCollision();
-//			
-//			System.out.println("x, y: " + this.x + " " + this.y);
-//			
-//			try {
-//				Thread.sleep(200);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			
-//		}
 		
 		System.out.println("Thread Stopped");
 		
 		
 	}
 	
-	void detectCollision() {
-			
-
-	if ( this.r.intersects( frog.getRectangle() ) ) {
-	//collision detected
-
-//	this.stopThread();
-	System.out.println("BOOM!");
-	sendMrfrogBackHome();
-	
-	this.setImage("nobgd_car.png");
-carLabel.setIcon(new ImageIcon(
-		getClass().getResource("images/" + this.getImage()
-)));
+	void detectOnBoard() {	
+		for (int i = 0; i < logArrays.length; i++) {
+			if ( this.r.intersects( frog.getRectangle() ) ) { 
+			//On board detected : )
+				System.out.println("Welcome board, Master Grogu!");
+			//move frog with log
+				frog.setX(this.x);
+				//frog is not going with log at here
+				//it's taking the last log's x location
+				frogLabel.setLocation(frog.getX(), frog.getY());
+		}
 	}
 }
 	
@@ -248,17 +192,5 @@ carLabel.setIcon(new ImageIcon(
 	)));
 		
 	}
-	
-//	public void hide() {
-//		this.visible = false;
-//		carLabel.setVisible(this.visible);
-//		visibiltyButton.setText("Show");
-//	}
-//
-//	public void show() {
-//		this.visible = true;
-//		carLabel.setVisible(this.visible);
-//		visibiltyButton.setText("Hide");
-//	}
 
 }

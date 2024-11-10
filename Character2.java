@@ -2,7 +2,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class Character2 extends Sprite implements Runnable {
+//Character is used for car
+public class Character2 extends Frogger_Sprite implements Runnable {
 	
 //	private Boolean visible;
 	private Boolean moving;
@@ -15,6 +16,8 @@ public class Character2 extends Sprite implements Runnable {
 	
 	private Character1 frog;
 	private JLabel frogLabel;
+	
+
 	
 	public void setCharacter1 (Character1 temp) {
 		frog = temp;

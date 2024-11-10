@@ -13,17 +13,20 @@ import javax.swing.JLabel;
 public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListener {
 
 	//declare copies of our character
-	private Character1 frog;
-	private Character2 car;//car setup
-	private Character2 loggie;
 	private Character1 bgd;
+	private Character1 frog;
+//	private Character2 car;//car setup
+	
 	
 	private Character2 carArrays[];
 	private JLabel carLabels[];
+
 	private Character2 carArrays2[];
 	private JLabel carLabels2[];
 	
-	private Character2 logArrays[];
+
+//	private Character3 loggie;
+	private Character3 logArrays[];
 	private JLabel logLabels[];
 	
 	//GUI variables
@@ -38,8 +41,8 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		super("Doctor Demo");
 		frog = new Character1(100, 200, 51, 55, "nobgd_grogu.png");
 		bgd = new Character1(0, 0, 1551, 700, "bgd_fullscreen_1.png");
-		car = new Character2(0, 0, 100, 57, "nobgd_car.png");
-		loggie = new Character2(0, 0, 65, 119, "nobgd_loggie.png");
+//		car = new Character2(0, 0, 100, 57, "nobgd_car.png");
+//		loggie = new Character3(0, 0, 65, 119, "nobgd_loggie.png");
 		
 		
 		
@@ -82,7 +85,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				carArrays[i] = new Character2(0 + (i * 550), 380, 57, 100, "nobgd_car.png");
 				carLabels[i] = new JLabel();
 				carImage = new ImageIcon(
-						getClass().getResource("images/" + car.getImage()
+						getClass().getResource("images/" + carArrays[i].getImage()
 							));
 				carLabels[i].setIcon(carImage);
 				carLabels[i].setSize(
@@ -113,7 +116,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				carArrays2[i] = new Character2(350 + (i * 550), 440, 57, 100, "nobgd_car.png");
 				carLabels2[i] = new JLabel();
 				carImage = new ImageIcon(
-						getClass().getResource("images/" + car.getImage()
+						getClass().getResource("images/" + carArrays[i].getImage()
 							));
 				carLabels2[i].setIcon(carImage);
 				carLabels2[i].setSize(
@@ -131,38 +134,20 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				add(carLabels2[i]);
 			}
 		}
-		
-//===============  down here for loggie setting ==============
-//		loggieLabel = new JLabel();
-//		loggieImage = new ImageIcon(
-//			getClass().getResource("images/" + loggie.getImage()
-//				));
-//		loggieLabel.setIcon(loggieImage);
-//		loggieLabel.setSize(
-//						loggie.getWidth(),
-//						loggie.getHeight()
-//				);
-//		loggieLabel.setLocation(
-//						loggie.getX(), loggie.getY() );
-		
-		//loggieLabel HAS a memory address, using function from car
-//		loggie.setChara_loggieLabel(loggieLabel);
-//		loggie.setCharacter1Label(frogLabel);
-//		loggie.startThread();
-		
+			
 		//car loop labels array setup
 		int logCount = 6;
-		logArrays = new Character2[logCount];
+		logArrays = new Character3[logCount];
 		logLabels = new JLabel[logCount]; 
 		
 		//start a loop to initiate more logs
 		for(int i=0; i < logCount; i++) {
 			if (logArrays[i] == null) {//just in case it's null again
 				
-				logArrays[i] = new Character2(0 + (i * 350), 75, 65, 119, "nobgd_loggie.png");
+				logArrays[i] = new Character3(0 + (i * 350), 75, 65, 119, "nobgd_loggie.png");
 				logLabels[i] = new JLabel();
 				loggieImage = new ImageIcon(
-						getClass().getResource("images/" + loggie.getImage()
+						getClass().getResource("images/" + logArrays[i].getImage()
 							));
 				logLabels[i].setIcon(loggieImage);
 				logLabels[i].setSize(
@@ -173,9 +158,11 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 						logArrays[i].getX(), logArrays[i].getY() );
 				
 				logArrays[i].setCharacter1(frog);
-				//set log labels collision inside loop
-				logArrays[i].setCharacter2Label(logLabels[i]);
+				
+				//drag the log labels collision inside loop
+				logArrays[i].setCharacter3Label(logLabels[i]);
 				logArrays[i].setCharacter1Label(frogLabel);	
+				logArrays[i].setLogArrays(logArrays);
 				
 				add(logLabels[i]);
 			}
@@ -199,49 +186,9 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		bgdLabel.setLocation(
 						bgd.getX(), bgd.getY() );
 
-//		System.out.println("loggieLabel initialized: " + (loggieLabel != null));
-
-		//sometimes the car will show null pointer exception for some reasons
-//		if (loggieLabel != null) {
-//			loggie.setCharacter2Label(loggieLabel);
-//			loggie.setCharacter1Label(frogLabel);
-//		} else {
-//			System.out.println("====memory has nnot set yet! =====");
-//		}
-//		
-		
-//===============  up here for log setting ==============
-		
-		//set up visibility button
-//		visibilityButton = new JButton("Hide");
-//		visibilityButton.setSize(100, 50);
-//		visibilityButton.setLocation(
-//				GameProperties.SCREEN_WIDTH - 100, 
-//				GameProperties.SCREEN_HEIGHT - 100);
-//		visibilityButton.setFocusable(false);
-//		visibilityButton.addActionListener(this);
-//		car.setVisibilityButton(visibilityButton);
-//		loggie.setVisibilityButton(visibilityButton);
-
-
-		//move button
-//		startButton = new JButton("Run");
-//		startButton.setSize(100, 100);
-//		startButton.setLocation(
-//				GameProperties.SCREEN_WIDTH - 100, 
-//				GameProperties.SCREEN_HEIGHT - 200);
-//		startButton.setFocusable(false);
-//		startButton.addActionListener(this);
-//		car.setStartButton(startButton);
-//		//and the log so that log can run together
-//		loggie.setStartButton(startButton);
-		
-//		add(visibilityButton);
-//		add(startButton);
-//		add(carLabel);
 		add(frogLabel);
-//		add(loggieLabel);
 		add(bgdLabel);
+		//car and log has already added inside loop so
 		content.addKeyListener(this);
 		content.setFocusable(true);
 
@@ -298,7 +245,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		
 		for (int i = 0; i < logArrays.length; i++) {
 			if (logArrays[i] != null) {
-				logArrays[i].detectCollision();
+				logArrays[i].detectOnBoard();
 			}
 		}
 	}
@@ -382,28 +329,6 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-//		if ( e.getSource() == visibilityButton ) {
-//			
-//			System.out.println("visibilityButton pressed");	
-//			
-////			if ( car.getVisible() ) {
-////				car.hide();
-////			} else {
-////				car.show();
-////			}
-//		
-//		} else if ( e.getSource() == startButton ) {
-//			
-//			System.out.println("startButton pressed");	
-			
-//			if ( car.getMoving() ) {
-//				car.stopThread();
-//			} else {
-//
-//				car.startThread();
-//			}
-		
-//		}
 		
 	}
 

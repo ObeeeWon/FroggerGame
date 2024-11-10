@@ -1,5 +1,5 @@
 
-public class Character1 extends Sprite {
+public class Character1 extends Frogger_Sprite {
 
 	public Character1() {
 		super();
