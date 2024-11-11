@@ -36,16 +36,16 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 	private Character3 logArrays3[];
 	private JLabel logLabels3[];
 	
-	private int score = 0;
-	private JLabel scoreLabel;
+	private int scorePoint = 0;
+	private Character1 scorekeeper;// R2D2 and CP3
 	
 	//GUI variables
 	private Container content;
-	private JLabel frogLabel, carLabel, loggieLabel, bgdLabel;
-	private ImageIcon frogImage, carImage, loggieImage, bgdImage;
+	private JLabel frogLabel, bgdLabel, scorekeeperLabel, scoreLabel;
+	private ImageIcon frogImage, carImage, loggieImage, bgdImage, scorekeeperImage;
 	
-	//2 buttons
-//	private JButton startButton, visibilityButton;
+	// Next Version: 
+	// Background Music -  STAR WARS
 	//GUI setup
 	public Frogger_GamePrep() {
 		super("Doctor Demo");
@@ -53,8 +53,8 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		bgd = new Character1(0, 0, 1551, 700, "bgd_fullscreen_1.png");
 //		car = new Character2(0, 0, 100, 57, "nobgd_car.png");
 //		loggie = new Character3(0, 0, 65, 119, "nobg_x-wing.png");
-		
-		
+		scorekeeper = new Character1(200,200,92,55,"scorekeeper.png");
+
 		
 		//set up screen
 		setSize(GameProperties.SCREEN_WIDTH, 
@@ -62,6 +62,36 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		content = getContentPane();
 		content.setBackground(Color.gray);
 		setLayout(null);
+		
+		//score keeper R2D2 and CP3
+		scorekeeper.setX(80);
+		scorekeeper.setY(80);
+		scorekeeper.setWidth(92);
+		scorekeeper.setHeight(55);
+		scorekeeper.setImage("scorekeeper.png");
+		
+		scorekeeperLabel = new JLabel();
+		scorekeeperImage = new ImageIcon(
+	getClass().getResource("images/" + scorekeeper.getImage()
+		));
+		scorekeeperLabel.setIcon(scorekeeperImage);
+		scorekeeperLabel.setSize(
+				scorekeeper.getWidth(),
+				scorekeeper.getHeight()
+		);
+		scorekeeperLabel.setLocation(
+				scorekeeper.getX(), scorekeeper.getY() );
+		
+		//score of the game
+		//https://stackoverflow.com/questions/20999071/how-to-set-value-to-label-text
+		scoreLabel = new JLabel("Score: " + scorePoint);
+		scoreLabel.setSize(80, 50);
+		scoreLabel.setLocation(60, 20);
+		//set font color
+		//https://stackoverflow.com/questions/2966334/how-do-i-set-the-colour-of-a-label-coloured-text-in-java
+		scoreLabel.setForeground(Color.BLACK);
+		
+		add(scoreLabel);
 		
 		//frog setup
 		frog.setX(600);
@@ -83,20 +113,21 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				frog.getX(), frog.getY() );
 
 		
-		//car loop 1st line
+		//car loop 1st lane
 		int carCount = 4;
 		carArrays = new Character2[carCount];
 		carLabels = new JLabel[carCount]; 
 		
-		//start a loop to initiate more cars
+		//start a loop to initiate more than one car in the same lane
+		//https://stackoverflow.com/questions/44339372/print-to-java-gui-with-for-loop
 		for(int i=0; i < carCount; i++) {
-			if (carArrays[i] == null) {//just in case it's null again
+			if (carArrays[i] == null) {//just in case it's null 
 				
 				carArrays[i] = new Character2(0 + (i * 650), 390, 68, 121, "nobgd_car.png");
 				carLabels[i] = new JLabel();
 				carImage = new ImageIcon(
-						getClass().getResource("images/" + carArrays[i].getImage()
-							));
+		getClass().getResource("images/" + carArrays[i].getImage()
+			));
 				carLabels[i].setIcon(carImage);
 				carLabels[i].setSize(
 						carArrays[i].getWidth(),
@@ -114,20 +145,20 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 			}
 		}
 		
-		//car loop 2nd line
+		//car loop 2nd lane
 		int carCount2 = 4;
 		carArrays2 = new Character2[carCount2];
 		carLabels2 = new JLabel[carCount2]; 
 		
-		//start a loop to initiate more cars
+		//start a loop to initiate more than one car in the same lane
 		for(int i=0; i < carCount2; i++) {
 			if (carArrays2[i] == null) {//just in case it's null again
 				
 				carArrays2[i] = new Character2(350 + (i * 550), 460, 68, 121, "nobgd_car.png");
 				carLabels2[i] = new JLabel();
 				carImage = new ImageIcon(
-						getClass().getResource("images/" + carArrays[i].getImage()
-							));
+		getClass().getResource("images/" + carArrays[i].getImage()
+			));
 				carLabels2[i].setIcon(carImage);
 				carLabels2[i].setSize(
 						carArrays2[i].getWidth(),
@@ -145,21 +176,20 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 			}
 		}
 			
-		
-		//car loop 3rd line
+		//car loop 3rd lane
 		int carCount3 = 4;
 		carArrays3 = new Character2[carCount3];
 		carLabels3 = new JLabel[carCount3]; 
 		
-		//start a loop to initiate more cars
+		//start a loop to initiate more than one car in the same lane
 		for(int i=0; i < carCount3; i++) {
 			if (carArrays3[i] == null) {//just in case it's null again
 				
 				carArrays3[i] = new Character2(0 + (i * 550), 540, 68, 121, "nobgd_car.png");
 				carLabels3[i] = new JLabel();
 				carImage = new ImageIcon(
-						getClass().getResource("images/" + carArrays[i].getImage()
-							));
+		getClass().getResource("images/" + carArrays[i].getImage()
+			));
 				carLabels3[i].setIcon(carImage);
 				carLabels3[i].setSize(
 						carArrays3[i].getWidth(),
@@ -178,7 +208,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		}
 		
 		
-		//log loop 1st line
+		//log loop 1st lane
 		int logCount = 4;
 		logArrays = new Character3[logCount];
 		logLabels = new JLabel[logCount]; 
@@ -189,8 +219,8 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				logArrays[i] = new Character3(0 + (i * 350), 85, 54, 68, "nobg_x-wing.png");
 				logLabels[i] = new JLabel();
 				loggieImage = new ImageIcon(
-						getClass().getResource("images/" + logArrays[i].getImage()
-							));
+		getClass().getResource("images/" + logArrays[i].getImage()
+			));
 				logLabels[i].setIcon(loggieImage);
 				logLabels[i].setSize(
 						logArrays[i].getWidth(),
@@ -210,7 +240,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 			}
 		}
 		
-		//log loop 2nd line
+		//log loop 2nd lane
 		int logCount2 = 4;
 		logArrays2 = new Character3[logCount2];
 		logLabels2 = new JLabel[logCount2]; 
@@ -222,8 +252,8 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				logArrays2[i] = new Character3(300 + (i * 300), 165, 54, 68, "nobg_x-wing.png");
 				logLabels2[i] = new JLabel();
 				loggieImage = new ImageIcon(
-						getClass().getResource("images/" + logArrays2[i].getImage()
-							));
+		getClass().getResource("images/" + logArrays2[i].getImage()
+			));
 				logLabels2[i].setIcon(loggieImage);
 				logLabels2[i].setSize(
 						logArrays2[i].getWidth(),
@@ -243,7 +273,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 			}
 		}
 		
-		//log loop 3rd line
+		//log loop 3rd lane
 		int logCount3 = 4;
 		logArrays3 = new Character3[logCount3];
 		logLabels3 = new JLabel[logCount3]; 
@@ -255,8 +285,8 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				logArrays3[i] = new Character3(0 + (i * 350), 250, 54, 68, "nobg_x-wing.png");
 				logLabels3[i] = new JLabel();
 				loggieImage = new ImageIcon(
-						getClass().getResource("images/" + logArrays3[i].getImage()
-							));
+		getClass().getResource("images/" + logArrays3[i].getImage()
+			));
 				logLabels3[i].setIcon(loggieImage);
 				logLabels3[i].setSize(
 						logArrays3[i].getWidth(),
@@ -297,10 +327,10 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 
 		add(frogLabel);
 		add(bgdLabel);
+		add(scorekeeperLabel);
 		//car and log has already added inside loop so
 		content.addKeyListener(this);
 		content.setFocusable(true);
-
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -311,9 +341,38 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		myGame.setVisible(true);
 		myGame.KeepMoving();
 		myGame.DetectCollision();
-
 	}
 	
+	void winScorePoint() {
+		scorePoint = scorePoint + 50;
+		scoreLabel.setText("Score: " + scorePoint);
+	}
+	
+	void loseScorePoint() {
+		scorePoint = scorePoint - 50;
+		scoreLabel.setText("Score: " + scorePoint);
+	}
+	
+	void detectDestination() {
+		if (frog.getY() <= 40) {
+			System.out.println("Welcome home, Master Grogu!");
+			winScorePoint(); // we won! add 50 points
+			sendMrfrogBackHome();
+		}
+	}
+	
+	//send Mr. Frog back to original position safely
+	public void sendMrfrogBackHome() {
+		
+		frog.setX(600);// Grogu blink!
+		frog.setY(640);// Grogu blink!
+		frogLabel.setLocation(600, 640);// Grogu blink!
+		frog.setImage("nobgd_grogu.png");
+	frogLabel.setIcon(new ImageIcon(
+			getClass().getResource("images/" + frog.getImage()
+	)));
+		
+	}
 	public void KeepMoving() {
 		
 //		if (carArray.getMoving()) {
@@ -360,6 +419,9 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				logArrays[i].detectCollision();
 			}
 		}
+	}
+	public void DetectDestination() {
+		detectDestination();
 	}
 
 	@Override
@@ -428,6 +490,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		frogLabel.setLocation(
 				frog.getX(), frog.getY() );
 		
+		detectDestination();
 	}
 
 
@@ -440,7 +503,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+//		detectDestination();
 		
 	}
 

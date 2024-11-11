@@ -8,8 +8,7 @@ public class Character3 extends Frogger_Sprite implements Runnable {
 	private Boolean moving;
 	private Thread t;	
 	private Character1 frog;
-	private JLabel frogLabel;
-	private JLabel loggieLabel;	
+	private JLabel frogLabel, loggieLabel;	
 	
 	private Character3 logArrays[];
 	
@@ -84,7 +83,7 @@ frogLabel.setIcon(new ImageIcon(
 		// set x position for both cars and logs
 		int x = this.x;
 		int x2 = this.x;
-		int y = this.y;
+//		int y = this.y; feels like no need to use y at here
 		
 		while (this.moving) {
 			
@@ -120,14 +119,14 @@ frogLabel.setIcon(new ImageIcon(
 			//detect if on board between frog and log
 			this.detectCollision();
 			
-			// let the logs refill gas : )
+			// let the X-wing(log) refill gas : )
 			try {
 				Thread.sleep(380);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println("x, y: " + this.x + " " + this.y);
 			
+			System.out.println("x, y: " + this.x + " " + this.y);
 		}
 		
 		System.out.println("Thread Stopped");
@@ -137,22 +136,22 @@ frogLabel.setIcon(new ImageIcon(
 	
 	void detectCollision() {
 		for (int i = 0; i < logArrays.length; i++) {
-			
+			//use for loop to detect every single item inside our arrays
 			if ( this.r.intersects( frog.getRectangle() ) ) { 
 			//On board detected : )
 				System.out.println("Welcome board, Master Grogu!");
 			//move frog with log
 				frog.setX(this.x);
-				//frog is not going with log at here
 				//Taking the last log's x location
 				frogLabel.setLocation(frog.getX(), frog.getY());
-				break;
+			}
 		}
 	}
-}
 	
+
+
 	//send Mr. Frog back to original position safely
-	void sendMrfrogBackHome() {
+	public void sendMrfrogBackHome() {
 		
 		frog.setX(600);// Grogu blink!
 		frog.setY(640);// Grogu blink!
@@ -164,9 +163,9 @@ frogLabel.setIcon(new ImageIcon(
 		
 	}
 	
-//	void dropIntoMilkyWay() {
-//		frog.setY(this.y);
-//		frog.getY(this.y);
+//	void getLostIntoMilkyWay() {
+//		loseScorePoint(50);
+//		sendMrfrogBackHome();
 //	}
 
 }

@@ -1,5 +1,4 @@
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 //Character is used for car
@@ -14,7 +13,7 @@ public class Character2 extends Frogger_Sprite implements Runnable {
 	private JLabel carLabel;	
 	private Character1 frog;
 	private JLabel frogLabel;
-	
+	private JLabel scoreLabel;
 
 	
 	public void setCharacter1 (Character1 temp) {
@@ -35,6 +34,10 @@ public class Character2 extends Frogger_Sprite implements Runnable {
 
 	public void setMoving(Boolean moving) {
 		this.moving = moving;
+	}
+	
+	public void setScoreLabel(JLabel scoreLabel) {
+		this.scoreLabel = scoreLabel;
 	}
 
 	public Character2() {
@@ -99,7 +102,6 @@ frogLabel.setIcon(new ImageIcon(
 		// set x position for both cars and logs
 		int x = this.x;
 		int x2 = this.x;
-		int y = this.y;
 		
 		while (this.moving) {
 			
@@ -143,6 +145,11 @@ frogLabel.setIcon(new ImageIcon(
 		System.out.println("Thread Stopped");
 	}
 	
+//	void loseScorePoint() {
+//		scorePoint = scorePoint - 50;
+//		scoreLabel.setText("Score: " + scorePoint);
+//	}
+	
 	void detectCollision() {
 			
 
@@ -151,6 +158,7 @@ frogLabel.setIcon(new ImageIcon(
 
 //	this.stopThread();
 	System.out.println("BOOM!");
+//	loseScorePoint();
 	sendMrfrogBackHome();
 	
 	this.setImage("nobgd_car.png");
