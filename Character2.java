@@ -99,10 +99,6 @@ public class Character2 extends Frogger_Sprite implements Runnable {
 frogLabel.setIcon(new ImageIcon(
 		getClass().getResource("images/" + frog.getImage()
 )));
-		//detect the null pointer
-		if (carLabel == null) {
-			System.out.println("=======check station 3: carLabel is null=======");
-		}
 
 			System.out.println("Starting thread");
 			t = new Thread(this, "Character2 thread");
@@ -188,34 +184,6 @@ frogLabel.setIcon(new ImageIcon(
 			}
 			
 		}
-		// it wont work for now try into one loop
-//		while (this.moving) {
-//			
-//			int x = this.x;
-//			
-//			x -= GameProperties.CHARACTER_STEP;
-//			
-//			if ( x >= GameProperties.SCREEN_WIDTH) {
-//				x = -1 * this.width;
-//			}
-//			
-//			this.setX(x); //this.x = x; //rectangle doesn't update
-//			
-//			//add loggie here to see what would happen
-//			loggieLabel.setLocation(this.x, this.y);
-//
-//			//detect collisions between frog r and char2
-//			if (this.visible) this.detectCollision();
-//			
-//			System.out.println("x, y: " + this.x + " " + this.y);
-//			
-//			try {
-//				Thread.sleep(200);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			
-//		}
 		
 		System.out.println("Thread Stopped");
 		
@@ -252,16 +220,4 @@ carLabel.setIcon(new ImageIcon(
 		
 	}
 	
-//	public void hide() {
-//		this.visible = false;
-//		carLabel.setVisible(this.visible);
-//		visibiltyButton.setText("Show");
-//	}
-//
-//	public void show() {
-//		this.visible = true;
-//		carLabel.setVisible(this.visible);
-//		visibiltyButton.setText("Hide");
-//	}
-
 }

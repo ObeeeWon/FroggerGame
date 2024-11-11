@@ -1,5 +1,4 @@
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 //Character3 is used for loggie
@@ -7,15 +6,10 @@ public class Character3 extends Frogger_Sprite implements Runnable {
 	
 //	private Boolean visible;
 	private Boolean moving;
-	private Thread t;
-	
-	//declare the label from the main program
-	//DO NOT INSTANTIATE IT!!!!!!!!!!!!!!!!! (no = new JLabel)
-	private JLabel carLabel, loggieLabel;	
-	private JButton startButton, visibiltyButton;
-	
+	private Thread t;	
 	private Character1 frog;
 	private JLabel frogLabel;
+	private JLabel loggieLabel;	
 	
 	private Character3 logArrays[];
 	
@@ -28,19 +22,7 @@ public class Character3 extends Frogger_Sprite implements Runnable {
 	}
 	
 	public void setCharacter3Label(JLabel temp) {
-		carLabel = temp;
-	}
-	
-	public void setChara_loggieLabel(JLabel temp) {
 		loggieLabel = temp;
-	}
-
-	public void setStartButton(JButton temp) {
-		startButton = temp;
-	}
-
-	public void setVisibilityButton(JButton temp) {
-		visibiltyButton = temp;
 	}
 
 	public Boolean getMoving() {
@@ -59,7 +41,6 @@ public class Character3 extends Frogger_Sprite implements Runnable {
 		super();
 		// TODO Auto-generated constructor stub
 		this.moving = false;
-//		this.visible = true;
 	}
 
 	public Character3(int x, int y, int height, int width, String image) {
@@ -77,20 +58,6 @@ public class Character3 extends Frogger_Sprite implements Runnable {
 		if ( !this.moving ) {
 			this.moving = true;
 			
-			//is it here?
-			//wait until not null
-			if (carLabel == null) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e){
-					e.printStackTrace();
-				}
-			} else {
-				carLabel.setIcon(new ImageIcon(
-						getClass().getResource("images/" + this.getImage()
-				)));
-			}
-
 			frog.setImage("nobgd_grogu.png");
 frogLabel.setIcon(new ImageIcon(
 		getClass().getResource("images/" + frog.getImage()
@@ -112,7 +79,6 @@ frogLabel.setIcon(new ImageIcon(
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-
 		System.out.println("run triggered");
 		
 //		if (loggieLabel == null) {
@@ -123,41 +89,38 @@ frogLabel.setIcon(new ImageIcon(
 		
 		// set x position for both cars and logs
 		int x = this.x;
-
+		int x2 = this.x;
+		
 		while (this.moving) {
 			
 			x += GameProperties.CHARACTER_STEP;
+			x2 -= GameProperties.CHARACTER_STEP;
 			
 			if ( x >= GameProperties.SCREEN_WIDTH) {
-				x = -1 * this.width;			
+				x = -1 * this.width;
+				
 			}
-			
-			this.setX(x); //rectangle doesn't update
-			carLabel.setLocation(x, this.y);
-			
+			if ( x2 <= -1 * this.width) {//if position goes off-screen
+				x2 = GameProperties.SCREEN_WIDTH;
+				
+			}
+			this.setX(x2); //set new position for the log
+
 			//loggieLabel is moving at here !!!!!
-			if (loggieLabel == null 
-					) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e){
-					e.printStackTrace();
-				}
-			} else {
-				loggieLabel.setLocation(x, this.y);
+			if (loggieLabel != null) {
+				loggieLabel.setLocation(x2, this.y);
 			}
-			
 			
 			//detect if on board between frog and log
 			this.detectOnBoard();
 			
-			System.out.println("x, y: " + this.x + " " + this.y);
-			
+			// let the logs take a break
 			try {
 				Thread.sleep(200);
-			} catch (Exception e) {
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			System.out.println("x, y: " + this.x + " " + this.y);
 			
 		}
 		
@@ -166,16 +129,34 @@ frogLabel.setIcon(new ImageIcon(
 		
 	}
 	
+//	void detectOnBoard() {	
+//		for (int i = 0; i < logArrays.length; i++) {
+//			if ( this.r.intersects( frog.getRectangle() ) ) { 
+//			//On board detected : )
+//				System.out.println("Welcome board, Master Grogu!");
+//			//move frog with log
+//				frog.setX(this.x);
+//				//frog is not going with log at here
+//				//it's taking the last log's x location
+//				frogLabel.setLocation(frog.getX(), frog.getY());
+//		}
+//	}
+//}
+	
 	void detectOnBoard() {	
 		for (int i = 0; i < logArrays.length; i++) {
-			if ( this.r.intersects( frog.getRectangle() ) ) { 
+			if (logArrays[i].getRectangle().intersects(frog.getRectangle())) {
+//			if ( this.r.intersects( frog.getRectangle() ) ) { 
 			//On board detected : )
 				System.out.println("Welcome board, Master Grogu!");
 			//move frog with log
-				frog.setX(this.x);
+				frog.setX(logArrays[i].getX());
+				frog.setY(logArrays[i].getY());
 				//frog is not going with log at here
 				//it's taking the last log's x location
 				frogLabel.setLocation(frog.getX(), frog.getY());
+				
+				break;
 		}
 	}
 }

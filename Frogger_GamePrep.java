@@ -15,19 +15,27 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 	//declare copies of our character
 	private Character1 bgd;
 	private Character1 frog;
+	
 //	private Character2 car;//car setup
-	
-	
 	private Character2 carArrays[];
 	private JLabel carLabels[];
 
 	private Character2 carArrays2[];
 	private JLabel carLabels2[];
 	
+	private Character2 carArrays3[];
+	private JLabel carLabels3[];
 
 //	private Character3 loggie;
 	private Character3 logArrays[];
 	private JLabel logLabels[];
+	
+	private Character3 logArrays2[];
+	private JLabel logLabels2[];
+	
+	private Character3 logArrays3[];
+	private JLabel logLabels3[];
+	
 	
 	//GUI variables
 	private Container content;
@@ -42,7 +50,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		frog = new Character1(100, 200, 51, 55, "nobgd_grogu.png");
 		bgd = new Character1(0, 0, 1551, 700, "bgd_fullscreen_1.png");
 //		car = new Character2(0, 0, 100, 57, "nobgd_car.png");
-//		loggie = new Character3(0, 0, 65, 119, "nobgd_loggie.png");
+//		loggie = new Character3(0, 0, 65, 119, "nobg_x-wing.png");
 		
 		
 		
@@ -55,7 +63,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		
 		//frog setup
 		frog.setX(600);
-		frog.setY(640);
+		frog.setY(620);
 		frog.setWidth(51);
 		frog.setHeight(55);
 		frog.setImage("nobgd_grogu.png");
@@ -73,8 +81,8 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				frog.getX(), frog.getY() );
 
 		
-		//car loop labels array setup
-		int carCount = 5;
+		//car loop 1st line
+		int carCount = 4;
 		carArrays = new Character2[carCount];
 		carLabels = new JLabel[carCount]; 
 		
@@ -82,7 +90,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		for(int i=0; i < carCount; i++) {
 			if (carArrays[i] == null) {//just in case it's null again
 				
-				carArrays[i] = new Character2(0 + (i * 550), 380, 57, 100, "nobgd_car.png");
+				carArrays[i] = new Character2(0 + (i * 650), 380, 79, 140, "nobgd_car.png");
 				carLabels[i] = new JLabel();
 				carImage = new ImageIcon(
 						getClass().getResource("images/" + carArrays[i].getImage()
@@ -103,17 +111,17 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				add(carLabels[i]);
 			}
 		}
-//		car.setCharacter1Label(frogLabel);	
-		//car loop labels array setup
-		int carCount2 = 5;
+		
+		//car loop 2nd line
+		int carCount2 = 4;
 		carArrays2 = new Character2[carCount2];
 		carLabels2 = new JLabel[carCount2]; 
 		
 		//start a loop to initiate more cars
-		for(int i=0; i < carCount; i++) {
+		for(int i=0; i < carCount2; i++) {
 			if (carArrays2[i] == null) {//just in case it's null again
 				
-				carArrays2[i] = new Character2(350 + (i * 550), 440, 57, 100, "nobgd_car.png");
+				carArrays2[i] = new Character2(350 + (i * 550), 450, 79, 140, "nobgd_car.png");
 				carLabels2[i] = new JLabel();
 				carImage = new ImageIcon(
 						getClass().getResource("images/" + carArrays[i].getImage()
@@ -135,8 +143,41 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 			}
 		}
 			
-		//car loop labels array setup
-		int logCount = 6;
+		
+		//car loop 3rd line
+		int carCount3 = 4;
+		carArrays3 = new Character2[carCount3];
+		carLabels3 = new JLabel[carCount3]; 
+		
+		//start a loop to initiate more cars
+		for(int i=0; i < carCount3; i++) {
+			if (carArrays3[i] == null) {//just in case it's null again
+				
+				carArrays3[i] = new Character2(0 + (i * 550), 530, 79, 140, "nobgd_car.png");
+				carLabels3[i] = new JLabel();
+				carImage = new ImageIcon(
+						getClass().getResource("images/" + carArrays[i].getImage()
+							));
+				carLabels3[i].setIcon(carImage);
+				carLabels3[i].setSize(
+						carArrays3[i].getWidth(),
+						carArrays3[i].getHeight()
+				);
+				carLabels3[i].setLocation(
+						carArrays3[i].getX(), carArrays3[i].getY() );
+				
+				carArrays3[i].setCharacter1(frog);
+				//set car labels collision inside loop
+				carArrays3[i].setCharacter2Label(carLabels3[i]);
+				carArrays3[i].setCharacter1Label(frogLabel);	
+				
+				add(carLabels3[i]);
+			}
+		}
+		
+		
+		//log loop 1st line
+		int logCount = 4;
 		logArrays = new Character3[logCount];
 		logLabels = new JLabel[logCount]; 
 		
@@ -144,7 +185,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		for(int i=0; i < logCount; i++) {
 			if (logArrays[i] == null) {//just in case it's null again
 				
-				logArrays[i] = new Character3(0 + (i * 350), 75, 65, 119, "nobgd_loggie.png");
+				logArrays[i] = new Character3(0 + (i * 350), 75, 84, 105, "nobg_x-wing.png");
 				logLabels[i] = new JLabel();
 				loggieImage = new ImageIcon(
 						getClass().getResource("images/" + logArrays[i].getImage()
@@ -167,6 +208,73 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				add(logLabels[i]);
 			}
 		}
+		
+		//log loop 2nd line
+		int logCount2 = 4;
+		logArrays2 = new Character3[logCount2];
+		logLabels2 = new JLabel[logCount2]; 
+		
+		//start a loop to initiate more logs
+		for(int i=0; i < logCount2; i++) {
+			if (logArrays2[i] == null) {//just in case it's null again
+				
+				logArrays2[i] = new Character3(300 + (i * 300), 155, 84, 105, "nobg_x-wing.png");
+				logLabels2[i] = new JLabel();
+				loggieImage = new ImageIcon(
+						getClass().getResource("images/" + logArrays2[i].getImage()
+							));
+				logLabels2[i].setIcon(loggieImage);
+				logLabels2[i].setSize(
+						logArrays2[i].getWidth(),
+						logArrays2[i].getHeight()
+				);
+				logLabels2[i].setLocation(
+						logArrays2[i].getX(), logArrays2[i].getY() );
+				
+				logArrays2[i].setCharacter1(frog);
+				
+				//drag the log labels collision inside loop
+				logArrays2[i].setCharacter3Label(logLabels2[i]);
+				logArrays2[i].setCharacter1Label(frogLabel);	
+				logArrays2[i].setLogArrays(logArrays2);
+				
+				add(logLabels2[i]);
+			}
+		}
+		
+		//log loop 3rd line
+		int logCount3 = 4;
+		logArrays3 = new Character3[logCount3];
+		logLabels3 = new JLabel[logCount3]; 
+		
+		//start a loop to initiate more logs
+		for(int i=0; i < logCount3; i++) {
+			if (logArrays3[i] == null) {//just in case it's null again
+				
+				logArrays3[i] = new Character3(0 + (i * 350), 240, 84, 105, "nobg_x-wing.png");
+				logLabels3[i] = new JLabel();
+				loggieImage = new ImageIcon(
+						getClass().getResource("images/" + logArrays3[i].getImage()
+							));
+				logLabels3[i].setIcon(loggieImage);
+				logLabels3[i].setSize(
+						logArrays3[i].getWidth(),
+						logArrays3[i].getHeight()
+				);
+				logLabels3[i].setLocation(
+						logArrays3[i].getX(), logArrays3[i].getY() );
+				
+				logArrays3[i].setCharacter1(frog);
+				
+				//drag the log labels collision inside loop
+				logArrays3[i].setCharacter3Label(logLabels3[i]);
+				logArrays3[i].setCharacter1Label(frogLabel);	
+				logArrays3[i].setLogArrays(logArrays3);
+				
+				add(logLabels3[i]);
+			}
+		}
+		
 		//background setup
 		bgd.setX(0);
 		bgd.setY(0);
@@ -217,6 +325,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 				
 				carArrays[i].startThread();
 				carArrays2[i].startThread();
+				carArrays3[i].startThread();
 //				System.out.println("car array is moving...");
 //				System.out.println("Car no." + i + " is moving.");
 			}
@@ -227,6 +336,8 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 			if (logArrays[i] != null) {
 				
 				logArrays[i].startThread();
+				logArrays2[i].startThread();
+				logArrays3[i].startThread();
 //				System.out.println("log array is moving...");
 //				System.out.println("Log no." + i + " is moving.");
 			}
