@@ -119,6 +119,9 @@ frogLabel.setIcon(new ImageIcon(
 			//detect if on board between frog and log
 			this.detectCollision();
 			
+			
+			//detect if dropped into water
+			this.getLostIntoMilkyWay();
 			// let the X-wing(log) refill gas : )
 			try {
 				Thread.sleep(380);
@@ -162,10 +165,14 @@ frogLabel.setIcon(new ImageIcon(
 	)));
 		
 	}
-	
-//	void getLostIntoMilkyWay() {
-//		loseScorePoint(50);
-//		sendMrfrogBackHome();
-//	}
+	//same as destination detection, use .getY() to detect boarder
+	// if frog drop into water
+	void getLostIntoMilkyWay() {
+		if (frog.getY() <= 40 && frog.getY() <= 300) {
+			if(this.r.intersects( frog.getRectangle() ) == false) {
+				sendMrfrogBackHome();
+			}
+		}
+	}
 
 }

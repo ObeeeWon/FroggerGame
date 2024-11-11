@@ -14,6 +14,7 @@ public class Character2 extends Frogger_Sprite implements Runnable {
 	private Character1 frog;
 	private JLabel frogLabel;
 	private JLabel scoreLabel;
+	private int scorePoint = 0;
 
 	
 	public void setCharacter1 (Character1 temp) {
@@ -92,7 +93,6 @@ frogLabel.setIcon(new ImageIcon(
 		//will end the thread on next repeated cycle
 		if (this.moving) {
 			this.moving = false;
-//			startButton.setText("Run");
 		}
 	}
 	
@@ -117,19 +117,18 @@ frogLabel.setIcon(new ImageIcon(
 				
 			}
 			
-			//just make sure cars moving from left to right
+			//just make sure cars moving from opposite direction
 			if (this.y == 460 ) {
 				carLabel.setLocation(x2, this.y);
-				this.setX(x2); //this.x = x; //rectangle doesn't update
+				this.setX(x2); 
 
 			} else {
 				carLabel.setLocation(x, this.y);
-				this.setX(x); //this.x = x; //rectangle doesn't update
+				this.setX(x); 
 
 			}
 			
 			//detect collisions between frog and char2
-//			if (this.visible) this.detectCollision();
 			this.detectCollision();
 			
 			System.out.println("x, y: " + this.x + " " + this.y);
@@ -145,10 +144,13 @@ frogLabel.setIcon(new ImageIcon(
 		System.out.println("Thread Stopped");
 	}
 	
-//	void loseScorePoint() {
-//		scorePoint = scorePoint - 50;
-//		scoreLabel.setText("Score: " + scorePoint);
-//	}
+	void loseScorePoint() {
+		scorePoint = scorePoint - 50;
+		System.out.println("hit a car, score -50");
+	        if (scoreLabel != null) {
+	            scoreLabel.setText("Score: " + scorePoint);
+	    }	
+    }//still can not pass to prep lol
 	
 	void detectCollision() {
 			
@@ -158,7 +160,7 @@ frogLabel.setIcon(new ImageIcon(
 
 //	this.stopThread();
 	System.out.println("BOOM!");
-//	loseScorePoint();
+	loseScorePoint();
 	sendMrfrogBackHome();
 	
 	this.setImage("nobgd_car.png");

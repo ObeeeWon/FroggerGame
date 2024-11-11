@@ -38,6 +38,7 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 	
 	private int scorePoint = 0;
 	private Character1 scorekeeper;// R2D2 and CP3
+	private Character2 scoreSender;
 	
 	//GUI variables
 	private Container content;
@@ -51,9 +52,9 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		super("Doctor Demo");
 		frog = new Character1(100, 200, 51, 55, "nobgd_grogu.png");
 		bgd = new Character1(0, 0, 1551, 700, "bgd_fullscreen_1.png");
+		scorekeeper = new Character1(200,200,92,55,"scorekeeper.png");
 //		car = new Character2(0, 0, 100, 57, "nobgd_car.png");
 //		loggie = new Character3(0, 0, 65, 119, "nobg_x-wing.png");
-		scorekeeper = new Character1(200,200,92,55,"scorekeeper.png");
 
 		
 		//set up screen
@@ -64,10 +65,10 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		setLayout(null);
 		
 		//score keeper R2D2 and CP3
-		scorekeeper.setX(80);
-		scorekeeper.setY(80);
-		scorekeeper.setWidth(92);
-		scorekeeper.setHeight(55);
+		scorekeeper.setX(130);
+		scorekeeper.setY(8);
+		scorekeeper.setWidth(40);
+		scorekeeper.setHeight(67);
 		scorekeeper.setImage("scorekeeper.png");
 		
 		scorekeeperLabel = new JLabel();
@@ -84,12 +85,17 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		
 		//score of the game
 		//https://stackoverflow.com/questions/20999071/how-to-set-value-to-label-text
-		scoreLabel = new JLabel("Score: " + scorePoint);
+		scoreLabel = new JLabel();
 		scoreLabel.setSize(80, 50);
-		scoreLabel.setLocation(60, 20);
+		scoreLabel.setLocation(180, 20);
 		//set font color
 		//https://stackoverflow.com/questions/2966334/how-do-i-set-the-colour-of-a-label-coloured-text-in-java
 		scoreLabel.setForeground(Color.BLACK);
+		
+		//set scoreJLabel after collision from character2
+		scoreLabel.setText("Score: " + scorePoint);
+		scoreSender = new Character2();
+		scoreSender.setScoreLabel(scoreLabel);		
 		
 		add(scoreLabel);
 		
@@ -112,7 +118,6 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		frogLabel.setLocation(
 				frog.getX(), frog.getY() );
 
-		
 		//car loop 1st lane
 		int carCount = 4;
 		carArrays = new Character2[carCount];
@@ -326,8 +331,8 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 						bgd.getX(), bgd.getY() );
 
 		add(frogLabel);
-		add(bgdLabel);
 		add(scorekeeperLabel);
+		add(bgdLabel);
 		//car and log has already added inside loop so
 		content.addKeyListener(this);
 		content.setFocusable(true);
@@ -348,10 +353,10 @@ public class Frogger_GamePrep extends JFrame implements KeyListener, ActionListe
 		scoreLabel.setText("Score: " + scorePoint);
 	}
 	
-	void loseScorePoint() {
-		scorePoint = scorePoint - 50;
-		scoreLabel.setText("Score: " + scorePoint);
-	}
+//	void loseScorePoint() {
+//		scorePoint = scorePoint - 50;
+//		scoreLabel.setText("Score: " + scorePoint);
+//	}
 	
 	void detectDestination() {
 		if (frog.getY() <= 40) {
