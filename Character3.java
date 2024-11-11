@@ -81,20 +81,18 @@ frogLabel.setIcon(new ImageIcon(
 		// TODO Auto-generated method stub
 		System.out.println("run triggered");
 		
-//		if (loggieLabel == null) {
-//		    System.out.println("loggieLabel is null before starting the thread!");
-//		} else {
-//		    System.out.println("loggieLabel is set correctly.");
-//		}
-		
 		// set x position for both cars and logs
 		int x = this.x;
 		int x2 = this.x;
+		int y = this.y;
 		
 		while (this.moving) {
 			
-			x += GameProperties.CHARACTER_STEP;
-			x2 -= GameProperties.CHARACTER_STEP;
+			x += GameProperties.CHARACTER_STEP - 10;
+			
+			x2 -= GameProperties.CHARACTER_STEP - 10;
+
+			
 			
 			if ( x >= GameProperties.SCREEN_WIDTH) {
 				x = -1 * this.width;
@@ -104,19 +102,27 @@ frogLabel.setIcon(new ImageIcon(
 				x2 = GameProperties.SCREEN_WIDTH;
 				
 			}
-			this.setX(x2); //set new position for the log
 
 			//loggieLabel is moving at here !!!!!
 			if (loggieLabel != null) {
-				loggieLabel.setLocation(x2, this.y);
+				
+				if(this.y == 165 ) {
+					loggieLabel.setLocation(x, this.y);
+					this.setX(x); 
+
+				} else {
+					loggieLabel.setLocation(x2, this.y);
+					this.setX(x2); //set new position when moving left
+
+				}
 			}
 			
 			//detect if on board between frog and log
-			this.detectOnBoard();
+			this.detectCollision();
 			
-			// let the logs take a break
+			// let the logs refill gas : )
 			try {
-				Thread.sleep(200);
+				Thread.sleep(380);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -129,33 +135,17 @@ frogLabel.setIcon(new ImageIcon(
 		
 	}
 	
-//	void detectOnBoard() {	
-//		for (int i = 0; i < logArrays.length; i++) {
-//			if ( this.r.intersects( frog.getRectangle() ) ) { 
-//			//On board detected : )
-//				System.out.println("Welcome board, Master Grogu!");
-//			//move frog with log
-//				frog.setX(this.x);
-//				//frog is not going with log at here
-//				//it's taking the last log's x location
-//				frogLabel.setLocation(frog.getX(), frog.getY());
-//		}
-//	}
-//}
-	
-	void detectOnBoard() {	
+	void detectCollision() {
 		for (int i = 0; i < logArrays.length; i++) {
-			if (logArrays[i].getRectangle().intersects(frog.getRectangle())) {
-//			if ( this.r.intersects( frog.getRectangle() ) ) { 
+			
+			if ( this.r.intersects( frog.getRectangle() ) ) { 
 			//On board detected : )
 				System.out.println("Welcome board, Master Grogu!");
 			//move frog with log
-				frog.setX(logArrays[i].getX());
-				frog.setY(logArrays[i].getY());
+				frog.setX(this.x);
 				//frog is not going with log at here
-				//it's taking the last log's x location
+				//Taking the last log's x location
 				frogLabel.setLocation(frog.getX(), frog.getY());
-				
 				break;
 		}
 	}
@@ -173,5 +163,10 @@ frogLabel.setIcon(new ImageIcon(
 	)));
 		
 	}
+	
+//	void dropIntoMilkyWay() {
+//		frog.setY(this.y);
+//		frog.getY(this.y);
+//	}
 
 }

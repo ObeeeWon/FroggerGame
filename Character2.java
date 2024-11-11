@@ -11,9 +11,7 @@ public class Character2 extends Frogger_Sprite implements Runnable {
 	
 	//declare the label from the main program
 	//DO NOT INSTANTIATE IT!!!!!!!!!!!!!!!!! (no = new JLabel)
-	private JLabel carLabel, loggieLabel;	
-	private JButton startButton, visibiltyButton;
-	
+	private JLabel carLabel;	
 	private Character1 frog;
 	private JLabel frogLabel;
 	
@@ -30,26 +28,6 @@ public class Character2 extends Frogger_Sprite implements Runnable {
 	public void setCharacter2Label(JLabel temp) {
 		carLabel = temp;
 	}
-	
-	public void setChara_loggieLabel(JLabel temp) {
-		loggieLabel = temp;
-	}
-
-	public void setStartButton(JButton temp) {
-		startButton = temp;
-	}
-
-	public void setVisibilityButton(JButton temp) {
-		visibiltyButton = temp;
-	}
-
-//	public Boolean getVisible() {
-//		return visible;
-//	}
-
-//	public void setVisible(Boolean visible) {
-//		this.visible = visible;
-//	}
 
 	public Boolean getMoving() {
 		return moving;
@@ -118,17 +96,11 @@ frogLabel.setIcon(new ImageIcon(
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		if (loggieLabel == null) {
-		    System.out.println("loggieLabel is null before starting the thread!");
-		} else {
-		    System.out.println("loggieLabel is set correctly.");
-		}
-		System.out.println("run triggered");
-		
 		// set x position for both cars and logs
 		int x = this.x;
 		int x2 = this.x;
-		// ===================
+		int y = this.y;
+		
 		while (this.moving) {
 			
 			x += GameProperties.CHARACTER_STEP;
@@ -142,43 +114,26 @@ frogLabel.setIcon(new ImageIcon(
 				x2 = GameProperties.SCREEN_WIDTH;
 				
 			}
-			this.setX(x); //this.x = x; //rectangle doesn't update
 			
-			//is it here? yes it is lol
-			//wait until not null
-			//move the car if not null
-			if (carLabel == null
-					) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e){
-					e.printStackTrace();
-				}
+			//just make sure cars moving from left to right
+			if (this.y == 460 ) {
+				carLabel.setLocation(x2, this.y);
+				this.setX(x2); //this.x = x; //rectangle doesn't update
+
 			} else {
 				carLabel.setLocation(x, this.y);
+				this.setX(x); //this.x = x; //rectangle doesn't update
+
 			}
 			
-			//loggieLabel is moving at here !!!!!
-			if (loggieLabel == null 
-					) {
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e){
-					e.printStackTrace();
-				}
-			} else {
-				loggieLabel.setLocation(x2, this.y);
-			}
-			
-			
-			//detect collisions between frog r and char2
+			//detect collisions between frog and char2
 //			if (this.visible) this.detectCollision();
 			this.detectCollision();
 			
 			System.out.println("x, y: " + this.x + " " + this.y);
-			
+			//cars take a break and refill some gas here
 			try {
-				Thread.sleep(200);
+				Thread.sleep(800);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -186,8 +141,6 @@ frogLabel.setIcon(new ImageIcon(
 		}
 		
 		System.out.println("Thread Stopped");
-		
-		
 	}
 	
 	void detectCollision() {
@@ -210,9 +163,9 @@ carLabel.setIcon(new ImageIcon(
 	//send Mr. Frog back to original position safely
 	void sendMrfrogBackHome() {
 		
-		frog.setX(600);// Grogu blink!
-		frog.setY(640);// Grogu blink!
-		frogLabel.setLocation(600, 640);// Grogu blink!
+		frog.setX(600);// Grogu blink! Bit me!
+		frog.setY(640);// Grogu blink! Bit me!
+		frogLabel.setLocation(600, 640);// Grogu blink! Bit me!
 		frog.setImage("nobgd_grogu.png");
 	frogLabel.setIcon(new ImageIcon(
 			getClass().getResource("images/" + frog.getImage()
